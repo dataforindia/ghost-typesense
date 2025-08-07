@@ -191,7 +191,7 @@ import Typesense from 'typesense';
             this.emptyState = this.modal.querySelector(`#${CSS_PREFIX}-empty`);
 
             // Handle dark mode
-            this.updateTheme();
+            // this.updateTheme();
         }
 
         getCommonSearchesHtml() {
@@ -301,9 +301,9 @@ import Typesense from 'typesense';
             });
 
             // Handle theme changes
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-                this.updateTheme();
-            });
+            // window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+            //     this.updateTheme();
+            // });
         }
 
         attachCommonSearchListeners() {
