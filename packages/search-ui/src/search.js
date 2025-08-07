@@ -486,9 +486,9 @@ import Typesense from 'typesense';
                     `;
                 }).join('');
                 
-                const tagsResults = `<a href="${hit.document.url || '#'}" 
+                const tagsResults = `<a href="#" 
                             class="${CSS_PREFIX}-result-link"
-                            aria-label="${title}">
+                            aria-label="tag1">
                             <article class="${CSS_PREFIX}-result-item" role="article">
                                 <h3 class="${CSS_PREFIX}-result-title" role="heading" aria-level="3">Tags Found</h3>
                                 <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">Tags list here</p>
