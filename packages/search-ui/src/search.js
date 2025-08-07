@@ -486,7 +486,16 @@ import Typesense from 'typesense';
                     `;
                 }).join('');
                 
-                this.hitsList.innerHTML = resultsHtml;
+                const tagsResults = `<a href="${hit.document.url || '#'}" 
+                            class="${CSS_PREFIX}-result-link"
+                            aria-label="${title}">
+                            <article class="${CSS_PREFIX}-result-item" role="article">
+                                <h3 class="${CSS_PREFIX}-result-title" role="heading" aria-level="3">Tags Found</h3>
+                                <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">Tags list here</p>
+                            </article>
+                        </a>`
+
+                this.hitsList.innerHTML = tagsResults + resultsHtml;
                 this.hitsList.classList.remove(`${CSS_PREFIX}-hidden`);
             } catch (error) {
                 console.error('Search failed:', error);
