@@ -15,9 +15,7 @@ export interface Post {
   updated_at: number;
   'tags.name'?: string[];
   'tags.slug'?: string[];
-  'authors.name'?: string[];
-  'authors.slug'?: string[];
-  authors?: string[];
+  authors?: any;
   tags?: string[];
   [key: string]: unknown;
 }
@@ -149,9 +147,8 @@ export class GhostTypesenseManager {
 
     const authors = post.authors;
     if (authors && Array.isArray(authors) && authors.length > 0) {
-      transformed.authors = authors.map((author: { name: string }) => author.name);
-      transformed['authors.slug'] = authors.map((author: { slug: string }) => author.slug);
-      transformed['authors.profile_image'] = authors.map((author: any) => author.profile_image);
+      // transformed.authors = authors.map((author: { name: string }) => author.name);
+      transformed.authors = authors
     }
 
     // Add any additional fields specified in the config
