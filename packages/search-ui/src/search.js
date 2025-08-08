@@ -480,7 +480,7 @@ import Typesense from 'typesense';
                             aria-label="${title}">
                             <article class="${CSS_PREFIX}-result-item" role="article">
                                 <h3 class="${CSS_PREFIX}-result-title" role="heading" aria-level="3">${title}</h3>
-                                <p>${JSON.stringify(hit.document)}</p>
+                                <p>${JSON.stringify(hit.document.tags)} --- ${JSON.stringify(hit.document.authors)}</p>
                                 <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">${excerpt}</p>
                             </article>
                         </a>
@@ -537,7 +537,7 @@ import Typesense from 'typesense';
                 query_by_weights: weights.join(','),
                 highlight_full_fields: highlightFields.join(','),
                 highlight_affix_num_tokens: 30,
-                include_fields: 'title,url,excerpt,plaintext,published_at,tags',
+                include_fields: 'title,url,excerpt,plaintext,published_at,tags,authors',
                 typo_tolerance: false,
                 num_typos: 0,
                 prefix: true,
