@@ -90,7 +90,9 @@ import Typesense from 'typesense';
                     excerpt: { weight: 3, highlight: true },
                     plaintext: { weight: 4, highlight: true },
                     'tags.name': { weight: 4, highlight: true },
-                    'tags.slug': { weight: 3, highlight: true }
+                    'tags.slug': { weight: 3, highlight: true },
+                    'authors.name': { weight: 4, highlight: true },
+                    'authors.slug': { weight: 3, highlight: true }
                 }
             };
 
@@ -517,7 +519,9 @@ import Typesense from 'typesense';
                     excerpt: { weight: 3, highlight: true },
                     plaintext: { weight: 4, highlight: true },
                     'tags.name': { weight: 4, highlight: true },
-                    'tags.slug': { weight: 3, highlight: true }
+                    'tags.slug': { weight: 3, highlight: true },
+                    'authors.name': { weight: 4, highlight: true },
+                    'authors.slug': { weight: 3, highlight: true }
                 };
 
             const searchFields = [];
