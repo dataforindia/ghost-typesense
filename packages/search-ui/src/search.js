@@ -480,7 +480,7 @@ import Typesense from 'typesense';
                             aria-label="${title}">
                             <article class="${CSS_PREFIX}-result-item" role="article">
                                 <h3 class="${CSS_PREFIX}-result-title" role="heading" aria-level="3">${title}</h3>
-                                <p>${JSON.stringify(hit.document.tags)} --- ${JSON.stringify(hit.document.authors)}</p>
+                                <p>${JSON.stringify(hit.document)}</p>
                                 <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">${excerpt}</p>
                             </article>
                         </a>
