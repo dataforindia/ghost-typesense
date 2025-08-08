@@ -480,6 +480,7 @@ import Typesense from 'typesense';
                             aria-label="${title}">
                             <article class="${CSS_PREFIX}-result-item" role="article">
                                 <h3 class="${CSS_PREFIX}-result-title" role="heading" aria-level="3">${title}</h3>
+                                <h3 class="${CSS_PREFIX}-result-title" role="heading" aria-level="3">${hit.document}</h3>
                                 <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">${excerpt}</p>
                             </article>
                         </a>
