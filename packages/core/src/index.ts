@@ -15,10 +15,10 @@ export interface Post {
   updated_at: number;
   'tags.name'?: string[];
   'tags.slug'?: string[];
-  authors?: any;
+  authors?: string[];
+  allAuthors?: any;
   tags?: string[];
   [key: string]: unknown;
-  allAuthors: any
 }
 
 export class GhostTypesenseManager {
