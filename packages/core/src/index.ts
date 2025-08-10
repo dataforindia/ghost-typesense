@@ -18,6 +18,7 @@ export interface Post {
   authors?: any;
   tags?: string[];
   [key: string]: unknown;
+  allAuthors: any
 }
 
 export class GhostTypesenseManager {
@@ -128,7 +129,8 @@ export class GhostTypesenseManager {
       plaintext: plaintext,
       excerpt: post.excerpt || '',
       published_at: new Date(post.published_at || Date.now()).getTime(),
-      updated_at: new Date(post.updated_at || Date.now()).getTime()
+      updated_at: new Date(post.updated_at || Date.now()).getTime(),
+      allAuthors: post.authors
     };
 
     if (post.feature_image) {
@@ -147,8 +149,7 @@ export class GhostTypesenseManager {
 
     const authors = post.authors;
     if (authors && Array.isArray(authors) && authors.length > 0) {
-      // transformed.authors = authors.map((author: { name: string }) => author.name);
-      transformed.authors = authors
+      transformed.authors = authors.map((author: { name: string }) => author.name);
     }
 
     // Add any additional fields specified in the config

@@ -149,16 +149,6 @@ import Typesense from 'typesense';
                                         />
                                     </form>
                                 </div>
-                                <div class="${CSS_PREFIX}-hints">
-                                    <span>
-                                        <kbd class="${CSS_PREFIX}-kbd">↑↓</kbd>
-                                        to navigate
-                                    </span>
-                                    <span>
-                                        <kbd class="${CSS_PREFIX}-kbd">esc</kbd>
-                                        to close
-                                    </span>
-                                </div>
                             </div>
                             <div class="${CSS_PREFIX}-results-container">
                                 ${this.getCommonSearchesHtml()}
