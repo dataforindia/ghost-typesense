@@ -149,16 +149,6 @@ import Typesense from 'typesense';
                                         />
                                     </form>
                                 </div>
-                                <div class="${CSS_PREFIX}-hints">
-                                    <span>
-                                        <kbd class="${CSS_PREFIX}-kbd">↑↓</kbd>
-                                        to navigate
-                                    </span>
-                                    <span>
-                                        <kbd class="${CSS_PREFIX}-kbd">esc</kbd>
-                                        to close
-                                    </span>
-                                </div>
                             </div>
                             <div class="${CSS_PREFIX}-results-container">
                                 ${this.getCommonSearchesHtml()}
@@ -486,7 +476,22 @@ import Typesense from 'typesense';
                     `;
                 }).join('');
                 
-                this.hitsList.innerHTML = resultsHtml;
+                const tagsResults = results.hits.map(hit => {
+                    const name = hit.document.tag.name;
+                    const link = hit.document.tag.slug;
+                    
+                    return `
+                        <a href="${window.Location.origin +'/tag/'+link}" 
+                            class="${CSS_PREFIX}-result-link"
+                            aria-label="${title}">
+                            <article class="${CSS_PREFIX}-result-item" role="article">
+                                <h3 class="${CSS_PREFIX}-result-title" role="heading" aria-level="3">${name}</h3>
+                            </article>
+                        </a>
+                    `;
+                }).join('');
+                
+                this.hitsList.innerHTML = tagsResults + resultsHtml;
                 this.hitsList.classList.remove(`${CSS_PREFIX}-hidden`);
             } catch (error) {
                 console.error('Search failed:', error);
