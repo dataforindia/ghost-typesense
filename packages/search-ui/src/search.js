@@ -484,8 +484,15 @@ import Typesense from 'typesense';
                 } catch {
                     window.localStorage.setItem('allResults', 'got error :(')
                 }
+                let authorsHtml = ''
+                try {
+                    const allAuthors = [...new Set(results.hits.flatMap(hit => hit.document['authors']))];
+                    authorsHtml = allAuthors.map(author=> `<p><a href="${window.location.origin}/author/${author}">${author}</a></p>`)
+                } catch {
+                    window.localStorage.setItem('authors', 'got error :(')
+                }
                 
-                this.hitsList.innerHTML = tagsHtml + resultsHtml;
+                this.hitsList.innerHTML = tagsHtml + authorsHtml + resultsHtml;
                 this.hitsList.classList.remove(`${CSS_PREFIX}-hidden`);
             } catch (error) {
                 console.error('Search failed:', error);
