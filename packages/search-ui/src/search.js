@@ -483,7 +483,7 @@ import Typesense from 'typesense';
                     return `
                         <a href="${window.Location.origin +'/tag/'+link}" 
                             class="${CSS_PREFIX}-result-link"
-                            aria-label="${title}">
+                            aria-label="${name}">
                             <article class="${CSS_PREFIX}-result-item" role="article">
                                 <h3 class="${CSS_PREFIX}-result-title" role="heading" aria-level="3">${name}</h3>
                             </article>
