@@ -149,16 +149,6 @@ import Typesense from 'typesense';
                                         />
                                     </form>
                                 </div>
-                                <div class="${CSS_PREFIX}-hints">
-                                    <span>
-                                        <kbd class="${CSS_PREFIX}-kbd">↑↓</kbd>
-                                        to navigate
-                                    </span>
-                                    <span>
-                                        <kbd class="${CSS_PREFIX}-kbd">esc</kbd>
-                                        to close
-                                    </span>
-                                </div>
                             </div>
                             <div class="${CSS_PREFIX}-results-container">
                                 <div id="${CSS_PREFIX}-hits" class="${CSS_PREFIX}-hits-list" role="region" aria-label="Search results"></div>
@@ -487,12 +477,9 @@ import Typesense from 'typesense';
                 }).join('');
 
                 const allTags = [...new Set(results.hits.flatMap(hit => hit.document.tags.name))];
-                const tagsHtml = allTags.map(tag=>{
-                    return `<a href="#"><p>${tag}</p></a>`
-                }
-                ).join('')
+                window.localStorage.setItem('allTagsResults', allTags)
                 
-                this.hitsList.innerHTML = tagsHtml + resultsHtml;
+                this.hitsList.innerHTML = resultsHtml;
                 this.hitsList.classList.remove(`${CSS_PREFIX}-hidden`);
             } catch (error) {
                 console.error('Search failed:', error);
