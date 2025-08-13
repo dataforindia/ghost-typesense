@@ -477,7 +477,7 @@ import Typesense from 'typesense';
                 }).join('');
 
                 // const allTags = [...new Set(results.hits.flatMap(hit => hit.document.tags.name))];
-                window.localStorage.setItem('allTagsResults', results.hits)
+                window.localStorage.setItem('allTagsResults', JSON.stringify(results.hits))
                 
                 this.hitsList.innerHTML = resultsHtml;
                 this.hitsList.classList.remove(`${CSS_PREFIX}-hidden`);
