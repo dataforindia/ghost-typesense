@@ -470,26 +470,13 @@ import Typesense from 'typesense';
                             aria-label="${title}">
                             <article class="${CSS_PREFIX}-result-item" role="article">
                                 <h3 class="${CSS_PREFIX}-result-title" role="heading" aria-level="3">${title}</h3>
-                                <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">${excerpt}</p>
+                                <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">${hit.document}</p>
                             </article>
                         </a>
                     `;
                 }).join('');
                 
-                const tagsResults = results.hits.map(hit => {
-                    const name = 'tag 1';
-                    
-                    return `
-                        <a href="#" 
-                            class="${CSS_PREFIX}-result-link"
-                            aria-label="${name}">
-                            <article class="${CSS_PREFIX}-result-item" role="article">
-                                <h3 class="${CSS_PREFIX}-result-title" role="heading" aria-level="3">${name}</h3>
-                                <p>${hit.document}</p>
-                            </article>
-                        </a>
-                    `;
-                }).join('');
+                const tagsResults = '<h3>Tag List</h3>'
                 
                 this.hitsList.innerHTML = tagsResults + resultsHtml;
                 this.hitsList.classList.remove(`${CSS_PREFIX}-hidden`);
