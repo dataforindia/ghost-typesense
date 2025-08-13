@@ -470,14 +470,14 @@ import Typesense from 'typesense';
                             aria-label="${title}">
                             <article class="${CSS_PREFIX}-result-item" role="article">
                                 <h3 class="${CSS_PREFIX}-result-title" role="heading" aria-level="3">${title}</h3>
-                                <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">${JSON.stringify(hit.document)}</p>
+                                <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">v8-${JSON.stringify(hit.document)}</p>
                             </article>
                         </a>
                     `;
                 }).join('');
 
                 // const allTags = [...new Set(results.hits.flatMap(hit => hit.document.tags.name))];
-                window.localStorage.setItem('allTagsResults', JSON.stringify(results.hits))
+                window.localStorage.setItem('allTagsResults', JSON.stringify(results))
                 
                 this.hitsList.innerHTML = resultsHtml;
                 this.hitsList.classList.remove(`${CSS_PREFIX}-hidden`);
