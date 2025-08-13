@@ -476,10 +476,16 @@ import Typesense from 'typesense';
                     `;
                 }).join('');
 
-                // const allTags = [...new Set(results.hits.flatMap(hit => hit.document.tags.name))];
-                window.localStorage.setItem('allTagsResults', JSON.stringify(results))
+                let tagsHtml = ''
+                try {
+                    const allTags = [...new Set(results.hits.flatMap(hit => hit.document['tags.name']))].filter(tag=> !tag.includes('#'));
+                    window.localStorage.setItem('allTagsResults', JSON.stringify(allTags))
+                    tagsHtml = allTags.map(tag=> `<a href="${window.location.origin}/tag/${tag}">${tag}</a>`)
+                } catch {
+                    window.localStorage.setItem('allTagsResults', 'got error :(')
+                }
                 
-                this.hitsList.innerHTML = resultsHtml;
+                this.hitsList.innerHTML = tagsHtml + resultsHtml;
                 this.hitsList.classList.remove(`${CSS_PREFIX}-hidden`);
             } catch (error) {
                 console.error('Search failed:', error);
