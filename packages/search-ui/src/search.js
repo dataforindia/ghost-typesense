@@ -485,8 +485,14 @@ import Typesense from 'typesense';
                         </a>
                     `;
                 }).join('');
+
+                const allTags = [...new Set(results.hits.flatMap(hit => hit.document.tags.name))];
+                const tagsHtml = allTags.map(tag=>{
+                    return `<a href="#"><p>${tag}</p></a>`
+                }
+                ).join('')
                 
-                this.hitsList.innerHTML = resultsHtml;
+                this.hitsList.innerHTML = tagsHtml + resultsHtml;
                 this.hitsList.classList.remove(`${CSS_PREFIX}-hidden`);
             } catch (error) {
                 console.error('Search failed:', error);

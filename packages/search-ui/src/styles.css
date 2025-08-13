@@ -23,7 +23,7 @@
 /* System/Default theme (light) */
 .mp-search-modal {
     /* Size multiplier - rem equivalent */
-    --mp-rem: 10px;
+    --mp-rem: 16px;
     
     --color-surface: rgb(252, 252, 252);
     --color-surface-elevated: rgb(255, 255, 255);
