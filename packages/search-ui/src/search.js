@@ -477,15 +477,15 @@ import Typesense from 'typesense';
                 }).join('');
                 
                 const tagsResults = results.hits.map(hit => {
-                    const name = hit.document.tag.name;
-                    const link = hit.document.tag.slug;
+                    const name = 'tag 1';
                     
                     return `
-                        <a href="${window.Location.origin +'/tag/'+link}" 
+                        <a href="#" 
                             class="${CSS_PREFIX}-result-link"
                             aria-label="${name}">
                             <article class="${CSS_PREFIX}-result-item" role="article">
                                 <h3 class="${CSS_PREFIX}-result-title" role="heading" aria-level="3">${name}</h3>
+                                <p>${hit.document}</p>
                             </article>
                         </a>
                     `;
