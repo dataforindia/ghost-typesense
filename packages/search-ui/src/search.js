@@ -462,7 +462,7 @@ import Typesense from 'typesense';
                 
                 const resultsHtml = results.hits.map(hit => {
                     const title = hit.document.title || 'Untitled';
-                    const excerpt = hit.document.excerpt || hit.document.plaintext?.substring(0, 160) || '';
+                    const excerpt = hit.document.excerpt || hit.document.plaintext?.substring(0, 120) || '';
                     
                     return `
                         <a href="${hit.document.url || '#'}" 
@@ -470,7 +470,7 @@ import Typesense from 'typesense';
                             aria-label="${title}">
                             <article class="${CSS_PREFIX}-result-item" role="article">
                                 <h3 class="${CSS_PREFIX}-result-title" role="heading" aria-level="3">${title}</h3>
-                                <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">v8-${JSON.stringify(hit.document)}</p>
+                                <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">${excerpt}</p>
                             </article>
                         </a>
                     `;
@@ -478,11 +478,11 @@ import Typesense from 'typesense';
 
                 let tagsHtml = ''
                 try {
-                    const allTags = [...new Set(results.hits.flatMap(hit => hit.document['tags.name']))].filter(tag=> !tag.includes('#'));
-                    window.localStorage.setItem('allTagsResults', JSON.stringify(allTags))
-                    tagsHtml = allTags.map(tag=> `<a href="${window.location.origin}/tag/${tag}">${tag}</a>`)
+                    const allTags = [...new Set(results.hits.flatMap(hit => hit.document['tags.name']))].filter(tag=> !tag.includes('#')).slice(0,3);
+                    window.localStorage.setItem('allResults', JSON.stringify(results.hits))
+                    tagsHtml = allTags.map(tag=> `<p><a href="${window.location.origin}/tag/${tag}">${tag}</a></p>`)
                 } catch {
-                    window.localStorage.setItem('allTagsResults', 'got error :(')
+                    window.localStorage.setItem('allResults', 'got error :(')
                 }
                 
                 this.hitsList.innerHTML = tagsHtml + resultsHtml;
@@ -526,7 +526,7 @@ import Typesense from 'typesense';
                 query_by_weights: weights.join(','),
                 highlight_full_fields: highlightFields.join(','),
                 highlight_affix_num_tokens: 30,
-                include_fields: 'title,url,excerpt,plaintext,published_at,tags',
+                include_fields: 'title,url,excerpt,plaintext,published_at,tags,authors',
                 typo_tolerance: false,
                 num_typos: 0,
                 prefix: true,
