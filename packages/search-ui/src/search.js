@@ -476,9 +476,7 @@ import Typesense from 'typesense';
                     `;
                 }).join('');
                 
-                const tagsResults = '<h3>Tag List</h3>'
-                
-                this.hitsList.innerHTML = tagsResults + resultsHtml;
+                this.hitsList.innerHTML = resultsHtml;
                 this.hitsList.classList.remove(`${CSS_PREFIX}-hidden`);
             } catch (error) {
                 console.error('Search failed:', error);
