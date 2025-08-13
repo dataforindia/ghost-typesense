@@ -161,7 +161,6 @@ import Typesense from 'typesense';
                                 </div>
                             </div>
                             <div class="${CSS_PREFIX}-results-container">
-                                ${this.getCommonSearchesHtml()}
                                 <div id="${CSS_PREFIX}-hits" class="${CSS_PREFIX}-hits-list" role="region" aria-label="Search results"></div>
                                 <div id="${CSS_PREFIX}-loading" class="${CSS_PREFIX}-loading ${CSS_PREFIX}-hidden" role="status" aria-live="polite">
                                     <div class="${CSS_PREFIX}-spinner" aria-hidden="true"></div>
@@ -172,6 +171,7 @@ import Typesense from 'typesense';
                                         <p>No results found</p>
                                     </div>
                                 </div>
+                                ${this.getCommonSearchesHtml()}
                             </div>
                         </div>
                     </div>
@@ -480,7 +480,7 @@ import Typesense from 'typesense';
                             aria-label="${title}">
                             <article class="${CSS_PREFIX}-result-item" role="article">
                                 <h3 class="${CSS_PREFIX}-result-title" role="heading" aria-level="3">${title}</h3>
-                                <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">${hit.document}</p>
+                                <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">${JSON.stringify(hit.document)}</p>
                             </article>
                         </a>
                     `;
