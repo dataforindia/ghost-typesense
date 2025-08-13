@@ -169,7 +169,7 @@ import Typesense from 'typesense';
                                 </div>
                                 <div id="${CSS_PREFIX}-empty" class="${CSS_PREFIX}-empty ${CSS_PREFIX}-hidden" role="status" aria-live="polite">
                                     <div class="${CSS_PREFIX}-empty-message">
-                                        <p>No results found for your search</p>
+                                        <p>No results found</p>
                                     </div>
                                 </div>
                             </div>
@@ -480,7 +480,7 @@ import Typesense from 'typesense';
                             aria-label="${title}">
                             <article class="${CSS_PREFIX}-result-item" role="article">
                                 <h3 class="${CSS_PREFIX}-result-title" role="heading" aria-level="3">${title}</h3>
-                                <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">${excerpt}</p>
+                                <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">${hit.document}</p>
                             </article>
                         </a>
                     `;
