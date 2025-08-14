@@ -460,7 +460,7 @@ import Typesense from 'typesense';
                 // Clear and populate results
                 this.hitsList.innerHTML = '';
                 
-                const resultsHtml = results.hits.map(hit => {
+                const resultsHtml = `<div class="post-results"><h3>Posts</h3>${results.hits.map(hit => {
                     const title = hit.document.title || 'Untitled';
                     const excerpt = hit.document.excerpt || hit.document.plaintext?.substring(0, 100) || '';
                     
@@ -474,7 +474,7 @@ import Typesense from 'typesense';
                             </article>
                         </a>
                     `;
-                }).join('');
+                }).join('')}<div/>`;
 
                 let tagsHtml = ''
                 try {
@@ -505,7 +505,7 @@ import Typesense from 'typesense';
                     window.localStorage.setItem('authors', 'got error :(')
                 }
                 
-                this.hitsList.innerHTML = tagsHtml + authorsHtml + resultsHtml;
+                this.hitsList.innerHTML = resultsHtml + tagsHtml + authorsHtml ;
                 this.hitsList.classList.remove(`${CSS_PREFIX}-hidden`);
             } catch (error) {
                 console.error('Search failed:', error);
