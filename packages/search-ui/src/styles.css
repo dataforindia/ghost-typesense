@@ -528,6 +528,6 @@
     }
 }
 
-.tag-results a {
+.tag-results a, .author-results a {
     text-decoration: none;
 }

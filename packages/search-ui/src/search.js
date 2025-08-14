@@ -482,15 +482,25 @@ import Typesense from 'typesense';
                     window.localStorage.setItem('allResults', JSON.stringify(results.hits))
                     tagsHtml = `<div class="tag-results">
                     <h3>Tags</h3>
-                    ${allTags.map(tag=> `<div><a href="${window.location.origin}/tag/${tag}">${tag}</a></div>`).join('')}
-                    </div>`
+                    ${allTags.map((tag) => `<div><a href="${window.location.origin}/tag/${tag}">${tag}</a></div>`).join("")}
+                    </div>`;
                 } catch {
                     window.localStorage.setItem('allResults', 'got error :(')
                 }
                 let authorsHtml = ''
                 try {
                     const allAuthors = [...new Set(results.hits.flatMap(hit => hit.document['authors']))];
-                    authorsHtml = allAuthors.map(author=> `<div><a href="${window.location.origin}/author/${author}">${author}</a></div>`)
+                    authorsHtml = `
+                        <div class="author-results">
+                            <h3>Authors</h3>
+                            ${allAuthors
+                            .map(
+                                (author) =>
+                                `<div><a href="${window.location.origin}/author/${author}">${author}</a></div>`
+                            )
+                            .join("")}
+                        </div>
+                    `;
                 } catch {
                     window.localStorage.setItem('authors', 'got error :(')
                 }
