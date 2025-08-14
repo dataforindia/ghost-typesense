@@ -462,7 +462,7 @@ import Typesense from 'typesense';
                 
                 const resultsHtml = results.hits.map(hit => {
                     const title = hit.document.title || 'Untitled';
-                    const excerpt = hit.document.excerpt || hit.document.plaintext?.substring(0, 120) || '';
+                    const excerpt = hit.document.excerpt || hit.document.plaintext?.substring(0, 100) || '';
                     
                     return `
                         <a href="${hit.document.url || '#'}" 
