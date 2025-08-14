@@ -487,6 +487,22 @@ import Typesense from 'typesense';
                 } catch {
                     window.localStorage.setItem('allResults', 'got error :(')
                 }
+
+                const authorDetails = {
+                    'Rukmini S': {
+                        slug: 'rukmini',
+                        image: ''
+                    },
+                    'Abhishek Waghmare': {
+                        slug: 'abhishek',
+                        image: ''
+                    },
+                    'Nandlal Mishra': {
+                        slug: 'nandlal',
+                        image: ''
+                    },
+                }
+
                 let authorsHtml = ''
                 try {
                     const allAuthors = [...new Set(results.hits.flatMap(hit => hit.document['authors']))];
@@ -496,7 +512,7 @@ import Typesense from 'typesense';
                             ${allAuthors
                             .map(
                                 (author) =>
-                                `<div><a href="${window.location.origin}/author/${author}">${author}</a></div>`
+                                `<div><a href="${window.location.origin}/author/${authorDetails[author] && authorDetails[author].slug ||author}">${author}</a></div>`
                             )
                             .join("")}
                         </div>
