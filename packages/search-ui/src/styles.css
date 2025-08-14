@@ -527,3 +527,7 @@
         padding-right: calc(4.25 * var(--mp-rem));
     }
 }
+
+.tag-results a {
+    text-decoration: none;
+}

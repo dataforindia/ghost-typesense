@@ -480,14 +480,17 @@ import Typesense from 'typesense';
                 try {
                     const allTags = [...new Set(results.hits.flatMap(hit => hit.document['tags.name']))].filter(tag=> !tag.includes('#')).slice(0,3);
                     window.localStorage.setItem('allResults', JSON.stringify(results.hits))
-                    tagsHtml = allTags.map(tag=> `<p><a href="${window.location.origin}/tag/${tag}">${tag}</a></p>`)
+                    tagsHtml = `<div class="tag-results">
+                    <h3>Tags</h3>
+                    ${allTags.map(tag=> `<div><a href="${window.location.origin}/tag/${tag}">${tag}</a></div>`)}
+                    </div>`
                 } catch {
                     window.localStorage.setItem('allResults', 'got error :(')
                 }
                 let authorsHtml = ''
                 try {
                     const allAuthors = [...new Set(results.hits.flatMap(hit => hit.document['authors']))];
-                    authorsHtml = allAuthors.map(author=> `<p><a href="${window.location.origin}/author/${author}">${author}</a></p>`)
+                    authorsHtml = allAuthors.map(author=> `<div><a href="${window.location.origin}/author/${author}">${author}</a></div>`)
                 } catch {
                     window.localStorage.setItem('authors', 'got error :(')
                 }

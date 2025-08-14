@@ -18,7 +18,7 @@ export default {
   },
   input: 'src/search.js',
   output: {
-    file: 'dist/search.min.js',
+    file: `../../search-${Math.floor(Math.random() * 90) + 10}.min.js`,
     format: 'iife',
     name: 'MagicPagesSearch',
     generatedCode: {
