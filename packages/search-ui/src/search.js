@@ -482,7 +482,7 @@ import Typesense from 'typesense';
                     window.localStorage.setItem('allResults', JSON.stringify(results.hits))
                     tagsHtml = `<div class="tag-results">
                     <h3>Tags</h3>
-                    ${allTags.map(tag=> `<div><a href="${window.location.origin}/tag/${tag}">${tag}</a></div>`)}
+                    ${allTags.map(tag=> `<div><a href="${window.location.origin}/tag/${tag}">${tag}</a></div>`).join('')}
                     </div>`
                 } catch {
                     window.localStorage.setItem('allResults', 'got error :(')
