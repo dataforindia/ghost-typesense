@@ -439,10 +439,12 @@ import Typesense from 'typesense';
                     ...searchParams
                 };
 
-                const results = await this.typesenseClient
-                    .collections(this.config.collectionName)
-                    .documents()
-                    .search(searchParameters);
+                // temp for dev
+                const results = {hits: JSON.parse(window.localStorage.getItem('allResults'))}
+                // await this.typesenseClient
+                //     .collections(this.config.collectionName)
+                //     .documents()
+                //     .search(searchParameters);
 
                 if (this.loadingState) this.loadingState.classList.add(`${CSS_PREFIX}-hidden`);
 
