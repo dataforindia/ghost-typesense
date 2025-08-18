@@ -140,7 +140,7 @@ import Typesense from 'typesense';
                                         <input 
                                             type="search" 
                                             class="${CSS_PREFIX}-input" 
-                                            placeholder="Search for anything"
+                                            placeholder="Search posts, topics and authors.."
                                             autocomplete="off"
                                             autocorrect="off"
                                             autocapitalize="off"
@@ -159,7 +159,7 @@ import Typesense from 'typesense';
                                 </div>
                                 <div id="${CSS_PREFIX}-empty" class="${CSS_PREFIX}-empty ${CSS_PREFIX}-hidden" role="status" aria-live="polite">
                                     <div class="${CSS_PREFIX}-empty-message">
-                                        <p>No results found</p>
+                                        <p>No matches found</p>
                                     </div>
                                 </div>
                                 ${this.getCommonSearchesHtml()}
@@ -197,7 +197,7 @@ import Typesense from 'typesense';
             return `
                 <div class="${CSS_PREFIX}-common-searches">
                     <div class="${CSS_PREFIX}-common-searches-title" role="heading" aria-level="2">
-                        Common searches
+                        Featured searches
                     </div>
                     <div id="${CSS_PREFIX}-common-searches-container" role="list">
                         ${this.config.commonSearches.map(search => `
@@ -482,9 +482,9 @@ import Typesense from 'typesense';
                 let tagsHtml = ''
                 try {
                     const allTags = [...new Set(results.hits.flatMap(hit => hit.document['tags.name']))].filter(tag=> !tag.includes('#')).slice(0,3);
-                    // window.localStorage.setItem('allResults', JSON.stringify(results.hits))
+                    window.localStorage.setItem('allResults', JSON.stringify(results.hits))
                     tagsHtml = `<div class="tag-results">
-                    <h3 class="result-group-header">Tags</h3>
+                    <h3 class="result-group-header">Topics</h3>
                     ${allTags.map((tag) => `<div class="tag-result-item"><p class="tag-list-marker">#</p><a href="${window.location.origin}/tag/${tag}">${tag}</a></div>`).join("")}
                     </div>`;
                 } catch {
@@ -498,19 +498,19 @@ import Typesense from 'typesense';
                     },
                     'Abhishek Waghmare': {
                         slug: 'abhishek',
-                        image: 'https://assets.dataforindia.com/ghost/2024/11/Rukmini2.jpg'
+                        image: 'https://assets.dataforindia.com/ghost/2024/03/Abhishek-1-.jpg'
                     },
                     'Nandlal Mishra': {
                         slug: 'nandlal',
-                        image: 'https://assets.dataforindia.com/ghost/2024/11/Rukmini2.jpg'
+                        image: 'https://assets.dataforindia.com/ghost/2024/09/nandlal.jpg'
                     },
                     'Pramit Bhattacharya': {
                         slug: 'pramit',
-                        image: 'https://assets.dataforindia.com/ghost/2024/11/Rukmini2.jpg'
+                        image: 'https://assets.dataforindia.com/ghost/2024/09/pramit.jpg'
                     },
                     'Nileena Suresh': {
                         slug: 'nileena',
-                        image: 'https://assets.dataforindia.com/ghost/2024/11/Rukmini2.jpg'
+                        image: 'https://assets.dataforindia.com/ghost/2024/09/nileena.jpg'
                     },
                 }
 
