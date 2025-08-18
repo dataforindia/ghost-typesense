@@ -85,6 +85,7 @@ import Typesense from 'typesense';
                 theme: 'system',
                 enableHighlighting: true,
                 enableDidYouMean: true,
+                highlight: true,
                 searchFields: {
                     title: { weight: 5, highlight: true },
                     excerpt: { weight: 3, highlight: true },
@@ -440,11 +441,11 @@ import Typesense from 'typesense';
                 };
 
                 // temp for dev
-                const results = {hits: JSON.parse(window.localStorage.getItem('allResults'))}
-                // await this.typesenseClient
-                //     .collections(this.config.collectionName)
-                //     .documents()
-                //     .search(searchParameters);
+                // const results = {hits: JSON.parse(window.localStorage.getItem('allResults'))}
+                const results =  await this.typesenseClient
+                    .collections(this.config.collectionName)
+                    .documents()
+                    .search(searchParameters);
 
                 if (this.loadingState) this.loadingState.classList.add(`${CSS_PREFIX}-hidden`);
 
@@ -462,7 +463,7 @@ import Typesense from 'typesense';
                 // Clear and populate results
                 this.hitsList.innerHTML = '';
                 
-                const resultsHtml = `<div class="post-results"><h3>Posts</h3>${results.hits.map(hit => {
+                const resultsHtml = `<div class="post-results"><h3 class="result-group-header">Posts</h3>${results.hits.map(hit => {
                     const title = hit.document.title || 'Untitled';
                     const excerpt = hit.document.excerpt || hit.document.plaintext?.substring(0, 100) || '';
                     
@@ -481,40 +482,48 @@ import Typesense from 'typesense';
                 let tagsHtml = ''
                 try {
                     const allTags = [...new Set(results.hits.flatMap(hit => hit.document['tags.name']))].filter(tag=> !tag.includes('#')).slice(0,3);
-                    window.localStorage.setItem('allResults', JSON.stringify(results.hits))
+                    // window.localStorage.setItem('allResults', JSON.stringify(results.hits))
                     tagsHtml = `<div class="tag-results">
-                    <h3>Tags</h3>
-                    ${allTags.map((tag) => `<div><a href="${window.location.origin}/tag/${tag}">${tag}</a></div>`).join("")}
+                    <h3 class="result-group-header">Tags</h3>
+                    ${allTags.map((tag) => `<div class="tag-result-item"><p class="tag-list-marker">#</p><a href="${window.location.origin}/tag/${tag}">${tag}</a></div>`).join("")}
                     </div>`;
                 } catch {
-                    window.localStorage.setItem('allResults', 'got error :(')
+                    // window.localStorage.setItem('allResults', 'got error :(')
                 }
 
                 const authorDetails = {
                     'Rukmini S': {
                         slug: 'rukmini',
-                        image: ''
+                        image: 'https://assets.dataforindia.com/ghost/2024/11/Rukmini2.jpg'
                     },
                     'Abhishek Waghmare': {
                         slug: 'abhishek',
-                        image: ''
+                        image: 'https://assets.dataforindia.com/ghost/2024/11/Rukmini2.jpg'
                     },
                     'Nandlal Mishra': {
                         slug: 'nandlal',
-                        image: ''
+                        image: 'https://assets.dataforindia.com/ghost/2024/11/Rukmini2.jpg'
+                    },
+                    'Pramit Bhattacharya': {
+                        slug: 'pramit',
+                        image: 'https://assets.dataforindia.com/ghost/2024/11/Rukmini2.jpg'
+                    },
+                    'Nileena Suresh': {
+                        slug: 'nileena',
+                        image: 'https://assets.dataforindia.com/ghost/2024/11/Rukmini2.jpg'
                     },
                 }
 
                 let authorsHtml = ''
                 try {
-                    const allAuthors = [...new Set(results.hits.flatMap(hit => hit.document['authors']))];
+                    const allAuthors = [...new Set(results.hits.flatMap(hit => hit.document['authors']))].filter(author=> !author.includes('DFI'));
                     authorsHtml = `
                         <div class="author-results">
-                            <h3>Authors</h3>
+                            <h3 class="result-group-header">Authors</h3>
                             ${allAuthors
                             .map(
                                 (author) =>
-                                `<div><a href="${window.location.origin}/author/${authorDetails[author] && authorDetails[author].slug ||author}">${author}</a></div>`
+                                `<div class="author-result-item"><img src="${authorDetails[author]?.image}" /><a href="${window.location.origin}/author/${authorDetails[author] && authorDetails[author].slug ||author}">${author}</a></div>`
                             )
                             .join("")}
                         </div>
