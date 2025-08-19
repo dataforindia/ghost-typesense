@@ -18,7 +18,8 @@ export default {
   },
   input: 'src/search.js',
   output: {
-    file: `../../search-${Math.floor(Math.random() * 90) + 100}.min.js`,
+    // file: `../../search-${Math.floor(Math.random() * 90) + 100}.min.js`,
+    file: `./search-dev.min.js`,
     format: 'iife',
     name: 'MagicPagesSearch',
     generatedCode: {
@@ -67,7 +68,7 @@ export default {
     }),
     visualizer({
       filename: 'stats.html',
-      open: true
+      open: false
     })
   ]
 };

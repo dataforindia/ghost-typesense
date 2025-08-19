@@ -85,7 +85,6 @@ import Typesense from 'typesense';
                 theme: 'system',
                 enableHighlighting: true,
                 enableDidYouMean: true,
-                highlight: true,
                 searchFields: {
                     title: { weight: 5, highlight: true },
                     excerpt: { weight: 3, highlight: true },
@@ -446,6 +445,7 @@ import Typesense from 'typesense';
                     .collections(this.config.collectionName)
                     .documents()
                     .search(searchParameters);
+                window.localStorage.setItem('resultsLog', JSON.stringify(results))
 
                 if (this.loadingState) this.loadingState.classList.add(`${CSS_PREFIX}-hidden`);
 
@@ -463,9 +463,9 @@ import Typesense from 'typesense';
                 // Clear and populate results
                 this.hitsList.innerHTML = '';
                 
-                const resultsHtml = `<div class="post-results"><h3 class="result-group-header">Posts</h3>${results.hits.map(hit => {
-                    const title = hit.document.title || 'Untitled';
-                    const excerpt = hit.document.excerpt || hit.document.plaintext?.substring(0, 100) || '';
+                const resultsHtml = `<div class="post-results"><h3 class="result-group-header">Posts</h3>${results.hits.slice(0,4).map(hit => {
+                    const title = hit.highlight.title?.snippet || hit.document.title || 'Untitled';
+                    const excerpt = hit.highlight.excerpt?.snippet || hit.highlight.plaintext?.snippet.substring(0, 100) || hit.document.excerpt || hit.document.plaintext?.substring(0, 100) || '';
                     
                     return `
                         <a href="${hit.document.url || '#'}" 
@@ -473,7 +473,7 @@ import Typesense from 'typesense';
                             aria-label="${title}">
                             <article class="${CSS_PREFIX}-result-item" role="article">
                                 <h3 class="${CSS_PREFIX}-result-title" role="heading" aria-level="3">${title}</h3>
-                                <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">${excerpt}</p>
+                                <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">${excerpt}...</p>
                             </article>
                         </a>
                     `;
@@ -552,8 +552,9 @@ import Typesense from 'typesense';
                     title: { weight: 5, highlight: true },
                     excerpt: { weight: 3, highlight: true },
                     plaintext: { weight: 4, highlight: true },
-                    'tags.name': { weight: 4, highlight: true },
-                    'tags.slug': { weight: 3, highlight: true }
+                    'tags.name': { weight: 4, highlight: false },
+                    'tags.slug': { weight: 3, highlight: false },
+                    'authors': { weight: 2, highlight: false }
                 };
 
             const searchFields = [];
