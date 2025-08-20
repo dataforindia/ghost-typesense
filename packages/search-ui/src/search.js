@@ -89,8 +89,6 @@ import Typesense from 'typesense';
                     title: { weight: 5, highlight: true },
                     excerpt: { weight: 3, highlight: true },
                     plaintext: { weight: 4, highlight: true },
-                    'tags.name': { weight: 4, highlight: true },
-                    'tags.slug': { weight: 3, highlight: true }
                 }
             };
 
@@ -195,7 +193,7 @@ import Typesense from 'typesense';
 
             return `
                 <div class="${CSS_PREFIX}-common-searches">
-                    <div class="${CSS_PREFIX}-common-searches-title" role="heading" aria-level="2">
+                    <div class="result-group-header" role="heading" aria-level="2">
                         Featured searches
                     </div>
                     <div id="${CSS_PREFIX}-common-searches-container" role="list">
@@ -463,9 +461,9 @@ import Typesense from 'typesense';
                 // Clear and populate results
                 this.hitsList.innerHTML = '';
                 
-                const resultsHtml = `<div class="post-results"><h3 class="result-group-header">Posts</h3>${results.hits.slice(0,4).map(hit => {
+                const resultsHtml = `<div class="post-results"><h3 class="result-group-header">Posts</h3>${results.hits.map(hit => {
                     const title = hit.highlight.title?.snippet || hit.document.title || 'Untitled';
-                    const excerpt = hit.highlight.excerpt?.snippet || hit.highlight.plaintext?.snippet.substring(0, 100) || hit.document.excerpt || hit.document.plaintext?.substring(0, 100) || '';
+                    const excerpt = hit.highlight.excerpt?.snippet || hit.highlight.plaintext?.snippet.substring || hit.document.excerpt || hit.document.plaintext?.substring || '';
                     
                     return `
                         <a href="${hit.document.url || '#'}" 
@@ -574,7 +572,7 @@ import Typesense from 'typesense';
                 query_by_weights: weights.join(','),
                 highlight_full_fields: highlightFields.join(','),
                 highlight_affix_num_tokens: 30,
-                include_fields: 'title,url,excerpt,plaintext,published_at,tags,authors',
+                include_fields: 'title,url,excerpt,plaintext,updated_at,published_at,tags,authors',
                 typo_tolerance: false,
                 num_typos: 0,
                 prefix: true,
@@ -582,7 +580,8 @@ import Typesense from 'typesense';
                 drop_tokens_threshold: 0,
                 enable_nested_fields: true,
                 prioritize_exact_match: true,
-                sort_by: '_text_match:desc,published_at:desc'
+                text_match_type: 'sum_score',
+                sort_by: '_text_match:desc,updated_at:desc,published_at:desc'
             };
         }
 
