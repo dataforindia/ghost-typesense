@@ -463,7 +463,7 @@ import Typesense from 'typesense';
                 
                 const resultsHtml = `<div class="post-results"><h3 class="result-group-header">Posts</h3>${results.hits.map(hit => {
                     const title = hit.highlight.title?.snippet || hit.document.title || 'Untitled';
-                    const excerpt = hit.highlight.excerpt?.snippet || hit.highlight.plaintext?.snippet.substring || hit.document.excerpt || hit.document.plaintext?.substring || '';
+                    const excerpt = hit.highlight.excerpt?.snippet || hit.highlight.plaintext?.snippet || hit.document.excerpt || hit.document.plaintext || '';
                     
                     return `
                         <a href="${hit.document.url || '#'}" 
