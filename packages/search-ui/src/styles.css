@@ -301,7 +301,7 @@
     .mp-search-results-container {
         height: auto;
         max-height: calc(60vh - calc(4 * var(--mp-rem)));
-        padding-bottom: calc(1 * var(--mp-rem));
+        padding-bottom: calc(1.5 * var(--mp-rem));
     }
 }
 

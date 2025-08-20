@@ -477,44 +477,64 @@ import Typesense from 'typesense';
                     `;
                 }).join('')}<div/>`;
 
-                let tagsHtml = ''
+                let tagsHtml = "";
                 try {
-                    const allTags = [...new Set(results.hits.flatMap(hit => hit.document['tags.name']))].filter(tag=> !tag.includes('#')).slice(0,3);
-                    window.localStorage.setItem('allResults', JSON.stringify(results.hits))
-                    tagsHtml = `<div class="tag-results">
+                  const allTags = [
+                    ...new Set(
+                      results.hits.flatMap((hit) => hit.document["tags.name"])
+                    ),
+                  ]
+                    .filter((tag) => !tag.includes("#"))
+                    .slice(0, 3);
+                  window.localStorage.setItem(
+                    "allResults",
+                    JSON.stringify(results.hits)
+                  );
+                  tagsHtml = `<div class="tag-results">
                     <h3 class="result-group-header">Topics</h3>
                     ${allTags.map((tag) => `<div class="tag-result-item"><p class="tag-list-marker">#</p><a href="${window.location.origin}/tag/${tag}">${tag}</a></div>`).join("")}
                     </div>`;
                 } catch {
-                    // window.localStorage.setItem('allResults', 'got error :(')
+                  // window.localStorage.setItem('allResults', 'got error :(')
                 }
 
                 const authorDetails = {
-                    'Rukmini S': {
-                        slug: 'rukmini',
-                        image: 'https://assets.dataforindia.com/ghost/2024/11/Rukmini2.jpg'
-                    },
-                    'Abhishek Waghmare': {
-                        slug: 'abhishek',
-                        image: 'https://assets.dataforindia.com/ghost/2024/03/Abhishek-1-.jpg'
-                    },
-                    'Nandlal Mishra': {
-                        slug: 'nandlal',
-                        image: 'https://assets.dataforindia.com/ghost/2024/09/nandlal.jpg'
-                    },
-                    'Pramit Bhattacharya': {
-                        slug: 'pramit',
-                        image: 'https://assets.dataforindia.com/ghost/2024/09/pramit.jpg'
-                    },
-                    'Nileena Suresh': {
-                        slug: 'nileena',
-                        image: 'https://assets.dataforindia.com/ghost/2024/09/nileena.jpg'
-                    },
-                }
+                  "Rukmini S": {
+                    slug: "rukmini",
+                    image:
+                      "https://assets.dataforindia.com/ghost/2024/11/Rukmini2.jpg",
+                  },
+                  "Abhishek Waghmare": {
+                    slug: "abhishek",
+                    image:
+                      "https://assets.dataforindia.com/ghost/2024/03/Abhishek-1-.jpg",
+                  },
+                  "Nandlal Mishra": {
+                    slug: "nandlal",
+                    image:
+                      "https://assets.dataforindia.com/ghost/2024/09/nandlal.jpg",
+                  },
+                  "Pramit Bhattacharya": {
+                    slug: "pramit",
+                    image:
+                      "https://assets.dataforindia.com/ghost/2024/09/pramit.jpg",
+                  },
+                  "Nileena Suresh": {
+                    slug: "nileena",
+                    image:
+                      "https://assets.dataforindia.com/ghost/2024/09/nileena.jpg",
+                  },
+                };
 
                 let authorsHtml = ''
                 try {
-                    const allAuthors = [...new Set(results.hits.flatMap(hit => hit.document['authors']))].filter(author=> !author.includes('DFI'));
+                    const allAuthors = [
+                      ...new Set(
+                        results.hits.flatMap((hit) => hit.document["authors"])
+                      ),
+                    ]
+                      .filter((author) => !author.includes("DFI"))
+                      .slice(0, 3);
                     authorsHtml = `
                         <div class="author-results">
                             <h3 class="result-group-header">Authors</h3>
@@ -571,7 +591,7 @@ import Typesense from 'typesense';
                 query_by: searchFields.join(','),
                 query_by_weights: weights.join(','),
                 highlight_full_fields: highlightFields.join(','),
-                highlight_affix_num_tokens: 30,
+                highlight_affix_num_tokens: 15,
                 include_fields: 'title,url,excerpt,plaintext,updated_at,published_at,tags,authors',
                 typo_tolerance: false,
                 num_typos: 0,
