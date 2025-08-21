@@ -601,6 +601,8 @@ import Typesense from 'typesense';
                 enable_nested_fields: true,
                 prioritize_exact_match: true,
                 text_match_type: 'sum_score',
+                stopwords: "common-english",
+                use_cache: true,
                 sort_by: '_text_match:desc,updated_at:desc,published_at:desc'
             };
         }
