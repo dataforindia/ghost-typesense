@@ -86,9 +86,13 @@ import Typesense from 'typesense';
                 enableHighlighting: true,
                 enableDidYouMean: true,
                 searchFields: {
-                    title: { weight: 5, highlight: true },
-                    excerpt: { weight: 3, highlight: true },
-                    plaintext: { weight: 4, highlight: true },
+                    title: { weight: 10, highlight: true },
+                    excerpt: { weight: 9, highlight: true },
+                    headings: { weight: 8, highlight: true },
+                    plaintext: { weight: 7, highlight: true },
+                    'tags.name': { weight: 5, highlight: false },
+                    'tags.slug': { weight: 5, highlight: false },
+                    'authors': { weight: 4, highlight: false }
                 }
             };
 
@@ -568,12 +572,13 @@ import Typesense from 'typesense';
             const fields = Object.keys(this.config.searchFields || {}).length > 0
                 ? this.config.searchFields
                 : {
-                    title: { weight: 5, highlight: true },
-                    excerpt: { weight: 3, highlight: true },
-                    plaintext: { weight: 4, highlight: true },
-                    'tags.name': { weight: 4, highlight: false },
-                    'tags.slug': { weight: 3, highlight: false },
-                    'authors': { weight: 2, highlight: false }
+                    title: { weight: 10, highlight: true },
+                    excerpt: { weight: 9, highlight: true },
+                    headings: { weight: 8, highlight: true },
+                    plaintext: { weight: 7, highlight: true },
+                    'tags.name': { weight: 5, highlight: false },
+                    'tags.slug': { weight: 5, highlight: false },
+                    'authors': { weight: 4, highlight: false }
                 };
 
             const searchFields = [];
@@ -593,7 +598,7 @@ import Typesense from 'typesense';
                 query_by_weights: weights.join(','),
                 highlight_full_fields: highlightFields.join(','),
                 highlight_affix_num_tokens: 15,
-                include_fields: 'title,url,excerpt,plaintext,updated_at,published_at,tags,authors',
+                include_fields: 'title,url,excerpt,plaintext,updated_at,published_at,tags,authors,headings',
                 typo_tolerance: false,
                 num_typos: 0,
                 prefix: true,
