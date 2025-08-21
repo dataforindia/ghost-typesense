@@ -434,7 +434,7 @@ import Typesense from 'typesense';
                 const searchParams = this.getSearchParameters();
                 const searchParameters = {
                     q: query,
-                    stopwords: query.includes('"') ? ["null"] : "common-english",
+                    ...(query.includes('"') ? {} : { stopwords: "common-english" }),
                     ...searchParams
                 };
 
