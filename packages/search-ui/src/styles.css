@@ -546,18 +546,7 @@
     padding: 8px 0;
 }
 
-.tag-results,
-.author-results,
-.post-results {
-    /* margin-bottom: 16px; */
-}
-
-.post-results {
-    /* padding: calc(0.75 * var(--mp-rem)) calc(calc(1.5 * var(--mp-rem)) - 6px) calc(0.75 * var(--mp-rem)) calc(1.5 * var(--mp-rem)); */
-}
-
 .mp-search-result-link:last-of-type {
-    /* margin-bottom: 16px; */
     border-bottom: solid 1px #e6e6e6;
 }
 .mp-search-result-item{
@@ -566,7 +555,6 @@
 }
 
 .result-group-header {
-    /* margin-bottom: 12px; */
     text-transform: uppercase;
     letter-spacing: .025em;
     color: #a3a3a3;
@@ -617,7 +605,6 @@
     font-weight: 700;
 }
 
-/* weird alignment fix for OCD */
 .mp-search-close>span{
     margin-bottom: 1px;
 }
