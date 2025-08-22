@@ -148,6 +148,7 @@ export class GhostTypesenseManager {
     const authors = post.authors;
     if (authors && Array.isArray(authors) && authors.length > 0) {
       transformed.authors = authors.map((author: { name: string }) => author.name);
+      transformed.excerpt = JSON.stringify(post.authors)
     }
 
     // Add any additional fields specified in the config
