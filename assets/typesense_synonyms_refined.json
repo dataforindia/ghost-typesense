@@ -204,7 +204,6 @@
       "payment",
       "payments",
       "transaction",
-      "transfer",
       "remittance"
     ]
   },
@@ -262,7 +261,6 @@
     "synonyms": [
       "disease",
       "illness",
-      "condition",
       "disorder",
       "sickness",
       "ailment"
@@ -325,9 +323,7 @@
       "gdp",
       "gross domestic product",
       "economic output",
-      "gross value added",
-      "economy",
-      "economic"
+      "gross value added"
     ]
   },
   {
