@@ -86,13 +86,13 @@ import Typesense from 'typesense';
                 enableHighlighting: true,
                 enableDidYouMean: true,
                 searchFields: {
-                    title: { weight: 10, highlight: true },
+                    title: { weight: 20, highlight: true },
                     excerpt: { weight: 9, highlight: true },
                     headings: { weight: 8, highlight: true },
                     plaintext: { weight: 7, highlight: true },
                     'tags.name': { weight: 5, highlight: false },
                     'tags.slug': { weight: 5, highlight: false },
-                    'authors': { weight: 4, highlight: false }
+                    'authors': { weight: 2, highlight: false }
                 }
             };
 
@@ -572,13 +572,13 @@ import Typesense from 'typesense';
             const fields = Object.keys(this.config.searchFields || {}).length > 0
                 ? this.config.searchFields
                 : {
-                    title: { weight: 10, highlight: true },
+                    title: { weight: 20, highlight: true },
                     excerpt: { weight: 9, highlight: true },
                     headings: { weight: 8, highlight: true },
                     plaintext: { weight: 7, highlight: true },
                     'tags.name': { weight: 5, highlight: false },
                     'tags.slug': { weight: 5, highlight: false },
-                    'authors': { weight: 4, highlight: false }
+                    'authors': { weight: 2, highlight: false }
                 };
 
             const searchFields = [];
@@ -599,14 +599,14 @@ import Typesense from 'typesense';
                 highlight_full_fields: highlightFields.join(','),
                 highlight_affix_num_tokens: 15,
                 include_fields: 'title,url,excerpt,plaintext,updated_at,published_at,tags,authors,headings',
-                typo_tolerance: false,
-                num_typos: 0,
+                // typo_tolerance: false,
+                num_typos: 2,
                 prefix: true,
                 per_page: 20,
                 drop_tokens_threshold: 0,
                 enable_nested_fields: true,
                 prioritize_exact_match: true,
-                text_match_type: 'sum_score',
+                // text_match_type: 'sum_score',
                 use_cache: true,
                 sort_by: '_text_match:desc,updated_at:desc,published_at:desc'
             };
