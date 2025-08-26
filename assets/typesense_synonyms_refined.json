@@ -1,0 +1,578 @@
+[
+  {
+    "id": "vehicles-transport",
+    "synonyms": [
+      "vehicle",
+      "car",
+      "cars", 
+      "automobile",
+      "motorcycle",
+      "transport",
+      "transportation"
+    ]
+  },
+  {
+    "id": "ownership-possession",
+    "synonyms": [
+      "ownership",
+      "possession",
+      "own",
+      "owned",
+      "possess"
+    ]
+  },
+  {
+    "id": "mobile-phone",
+    "synonyms": [
+      "phone",
+      "mobile",
+      "telephone",
+      "smartphone",
+      "cellular",
+      "handset"
+    ]
+  },
+  {
+    "id": "computer-device",
+    "synonyms": [
+      "computer",
+      "computers",
+      "device",
+      "devices",
+      "laptop",
+      "desktop"
+    ]
+  },
+  {
+    "id": "internet-connectivity",
+    "synonyms": [
+      "internet",
+      "online",
+      "connectivity",
+      "web",
+      "network"
+    ]
+  },
+  {
+    "id": "digital-technology",
+    "synonyms": [
+      "digital",
+      "technology",
+      "tech",
+      "technological"
+    ]
+  },
+  {
+    "id": "television-media",
+    "synonyms": [
+      "television",
+      "tv",
+      "tvs",
+      "broadcast"
+    ]
+  },
+  {
+    "id": "consumption-spending",
+    "synonyms": [
+      "consumption",
+      "spending",
+      "expenditure",
+      "expense",
+      "outlay"
+    ]
+  },
+  {
+    "id": "food-diet",
+    "synonyms": [
+      "food",
+      "foods",
+      "diet",
+      "dietary",
+      "nutrition",
+      "nutritional",
+      "eating"
+    ]
+  },
+  {
+    "id": "meat-protein",
+    "synonyms": [
+      "meat",
+      "protein",
+      "seafood",
+      "egg",
+      "eggs"
+    ]
+  },
+  {
+    "id": "dairy-milk",
+    "synonyms": [
+      "dairy",
+      "milk"
+    ]
+  },
+  {
+    "id": "cooking-kitchen",
+    "synonyms": [
+      "cooking",
+      "kitchen",
+      "meal",
+      "food preparation"
+    ]
+  },
+  {
+    "id": "malnutrition-deficiency",
+    "synonyms": [
+      "malnutrition",
+      "undernutrition",
+      "malnourished",
+      "deficiency",
+      "stunted",
+      "stunting"
+    ]
+  },
+  {
+    "id": "house-home",
+    "synonyms": [
+      "house",
+      "home",
+      "homes",
+      "household",
+      "households",
+      "housing",
+      "residence"
+    ]
+  },
+  {
+    "id": "toilet-sanitation",
+    "synonyms": [
+      "toilet",
+      "toilets",
+      "sanitation",
+      "bathroom",
+      "facility",
+      "lavatory"
+    ]
+  },
+  {
+    "id": "electricity-power",
+    "synonyms": [
+      "electricity",
+      "power",
+      "energy",
+      "electrical"
+    ]
+  },
+  {
+    "id": "water-supply",
+    "synonyms": [
+      "water",
+      "drinking",
+      "supply",
+      "tap",
+      "piped",
+      "well"
+    ]
+  },
+  {
+    "id": "asset-property",
+    "synonyms": [
+      "asset",
+      "assets",
+      "goods",
+      "appliances",
+      "property",
+      "belongings"
+    ]
+  },
+  {
+    "id": "bank-banking",
+    "synonyms": [
+      "bank",
+      "banking",
+      "banks",
+      "financial",
+      "finance"
+    ]
+  },
+  {
+    "id": "payment-transaction",
+    "synonyms": [
+      "payment",
+      "payments",
+      "transaction",
+      "transfer",
+      "remittance"
+    ]
+  },
+  {
+    "id": "income-earnings",
+    "synonyms": [
+      "income",
+      "incomes",
+      "earnings",
+      "wages",
+      "salary"
+    ]
+  },
+  {
+    "id": "savings-account",
+    "synonyms": [
+      "savings",
+      "account",
+      "deposit"
+    ]
+  },
+  {
+    "id": "credit-loan",
+    "synonyms": [
+      "credit",
+      "loan",
+      "debt",
+      "borrowing",
+      "lending"
+    ]
+  },
+  {
+    "id": "health-healthcare",
+    "synonyms": [
+      "health",
+      "healthcare",
+      "healthy",
+      "medical",
+      "medicine",
+      "wellness"
+    ]
+  },
+  {
+    "id": "care-treatment",
+    "synonyms": [
+      "care",
+      "treatment",
+      "therapy",
+      "service"
+    ]
+  },
+  {
+    "id": "mortality-death",
+    "synonyms": [
+      "mortality",
+      "death",
+      "deaths",
+      "dying",
+      "fatality"
+    ]
+  },
+  {
+    "id": "disease-illness",
+    "synonyms": [
+      "disease",
+      "illness",
+      "condition",
+      "disorder",
+      "sickness",
+      "ailment"
+    ]
+  },
+  {
+    "id": "access-availability",
+    "synonyms": [
+      "access",
+      "availability",
+      "available",
+      "accessible"
+    ]
+  },
+  {
+    "id": "measurement-data",
+    "synonyms": [
+      "measuring",
+      "measurement",
+      "estimate",
+      "estimating",
+      "counting",
+      "calculation"
+    ]
+  },
+  {
+    "id": "survey-research",
+    "synonyms": [
+      "survey",
+      "study",
+      "research",
+      "analysis",
+      "assessment",
+      "investigation"
+    ]
+  },
+  {
+    "id": "data-statistics",
+    "synonyms": [
+      "data",
+      "statistics",
+      "numbers",
+      "figures",
+      "metrics",
+      "stats"
+    ]
+  },
+  {
+    "id": "nfhs-survey",
+    "synonyms": [
+      "nfhs",
+      "national family health survey",
+      "household survey",
+      "family survey"
+    ]
+  },
+  {
+    "id": "gdp-economy",
+    "synonyms": [
+      "gdp",
+      "gross domestic product",
+      "economic output",
+      "economy",
+      "economic"
+    ]
+  },
+  {
+    "id": "growth-increase",
+    "synonyms": [
+      "growth",
+      "expansion",
+      "increase",
+      "rise",
+      "growing",
+      "development"
+    ]
+  },
+  {
+    "id": "inflation-price",
+    "synonyms": [
+      "inflation",
+      "price rise",
+      "cost increase"
+    ]
+  },
+  {
+    "id": "migration-movement",
+    "synonyms": [
+      "migration",
+      "movement",
+      "relocation",
+      "displacement"
+    ]
+  },
+  {
+    "id": "population-demographic",
+    "synonyms": [
+      "population",
+      "demographic",
+      "people",
+      "residents",
+      "citizens"
+    ]
+  },
+  {
+    "id": "distribution-pattern",
+    "synonyms": [
+      "distribution",
+      "spread",
+      "pattern",
+      "composition",
+      "share",
+      "proportion"
+    ]
+  },
+  {
+    "id": "projection-forecast",
+    "synonyms": [
+      "projection",
+      "forecast",
+      "prediction",
+      "estimate",
+      "outlook"
+    ]
+  },
+  {
+    "id": "manufacturing-industry",
+    "synonyms": [
+      "manufacturing",
+      "factory",
+      "industry",
+      "production",
+      "plant",
+      "industrial"
+    ]
+  },
+  {
+    "id": "hub-cluster",
+    "synonyms": [
+      "hub",
+      "cluster",
+      "center",
+      "zone"
+    ]
+  },
+  {
+    "id": "region-area",
+    "synonyms": [
+      "region",
+      "area",
+      "zone",
+      "territory"
+    ]
+  },
+  {
+    "id": "retail-trade",
+    "synonyms": [
+      "retail",
+      "trade",
+      "commerce",
+      "business",
+      "commercial"
+    ]
+  },
+  {
+    "id": "employment-job",
+    "synonyms": [
+      "employment",
+      "job",
+      "work",
+      "occupation",
+      "career",
+      "profession"
+    ]
+  },
+  {
+    "id": "unemployment-jobless",
+    "synonyms": [
+      "unemployment",
+      "jobless",
+      "unemployed",
+      "joblessness"
+    ]
+  },
+  {
+    "id": "self-employment-business",
+    "synonyms": [
+      "self-employment",
+      "entrepreneur",
+      "self-employed",
+      "own business"
+    ]
+  },
+  {
+    "id": "agriculture-farming",
+    "synonyms": [
+      "agriculture",
+      "farming",
+      "cultivation",
+      "agricultural",
+      "farm"
+    ]
+  },
+  {
+    "id": "rural-village",
+    "synonyms": [
+      "rural",
+      "village",
+      "villages",
+      "countryside"
+    ]
+  },
+  {
+    "id": "education-learning",
+    "synonyms": [
+      "education",
+      "learning",
+      "schooling",
+      "study",
+      "academic"
+    ]
+  },
+  {
+    "id": "literacy-reading",
+    "synonyms": [
+      "literacy",
+      "reading",
+      "writing",
+      "literate"
+    ]
+  },
+  {
+    "id": "enrolment-admission",
+    "synonyms": [
+      "enrolment",
+      "enrollment",
+      "admission",
+      "registration",
+      "attendance"
+    ]
+  },
+  {
+    "id": "state-province",
+    "synonyms": [
+      "state",
+      "province",
+      "states"
+    ]
+  },
+  {
+    "id": "urban-city",
+    "synonyms": [
+      "urban",
+      "city",
+      "metropolitan",
+      "town",
+      "municipal"
+    ]
+  },
+  {
+    "id": "india-indian",
+    "synonyms": [
+      "india",
+      "indian",
+      "bharat",
+      "indians"
+    ]
+  },
+  {
+    "id": "women-female",
+    "synonyms": [
+      "women",
+      "female",
+      "woman",
+      "girls"
+    ]
+  },
+  {
+    "id": "maternal-mother",
+    "synonyms": [
+      "maternal",
+      "mother",
+      "motherhood"
+    ]
+  },
+  {
+    "id": "child-infant",
+    "synonyms": [
+      "child",
+      "children",
+      "infant",
+      "baby",
+      "newborn",
+      "kids"
+    ]
+  },
+  {
+    "id": "standard-benchmark",
+    "synonyms": [
+      "standards",
+      "standard",
+      "benchmark",
+      "criteria",
+      "measure",
+      "norm"
+    ]
+  }
+]

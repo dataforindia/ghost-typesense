@@ -17,6 +17,7 @@ export interface Post {
   'tags.slug'?: string[];
   authors?: string[];
   tags?: string[];
+  headings?: string[];
   [key: string]: unknown;
 }
 
@@ -81,6 +82,7 @@ export class GhostTypesenseManager {
 
     // Ensure we have plaintext content
     let plaintext = post.plaintext || '';
+    let headings: string[] = [];
 
     // Always try to enhance/improve plaintext extraction from HTML 
     // even if plaintext already exists
@@ -90,6 +92,11 @@ export class GhostTypesenseManager {
       let cleanHtml = post.html
         .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
         .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '');
+
+      // Extract headings before other text processing
+      const headingMatches = cleanHtml.match(/<h[1-6][^>]*>([^<]*)<\/h[1-6]>/gi);
+      headings = headingMatches ? 
+        headingMatches.map(match => match.replace(/<[^>]*>/g, '').trim()).filter(h => h.length > 0) : [];
 
       // Extract text from anchor tags to preserve linked text
       cleanHtml = cleanHtml.replace(/<a[^>]*>([^<]*)<\/a>/gi, ' $1 ');
@@ -148,6 +155,11 @@ export class GhostTypesenseManager {
     const authors = post.authors;
     if (authors && Array.isArray(authors) && authors.length > 0) {
       transformed.authors = authors.map((author: { name: string }) => author.name);
+    }
+
+    // Add headings if extracted from HTML
+    if (headings.length > 0) {
+      transformed.headings = headings;
     }
 
     // Add any additional fields specified in the config
