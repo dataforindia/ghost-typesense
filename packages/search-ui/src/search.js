@@ -601,7 +601,7 @@ import Typesense from 'typesense';
                 include_fields: 'title,url,excerpt,plaintext,updated_at,published_at,tags,authors,headings',
                 // typo_tolerance: false,
                 num_typos: 2,
-                prefix: true,
+                prefix: false,
                 per_page: 20,
                 drop_tokens_threshold: 0,
                 enable_nested_fields: true,
