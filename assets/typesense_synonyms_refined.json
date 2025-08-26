@@ -7,6 +7,9 @@
       "cars", 
       "automobile",
       "motorcycle",
+      "bike",
+      "two-wheeleer",
+      "twowheeleer",
       "transport",
       "transportation"
     ]
@@ -29,7 +32,8 @@
       "telephone",
       "smartphone",
       "cellular",
-      "handset"
+      "handset",
+      "cellphone"
     ]
   },
   {
@@ -37,8 +41,6 @@
     "synonyms": [
       "computer",
       "computers",
-      "device",
-      "devices",
       "laptop",
       "desktop"
     ]
@@ -49,8 +51,7 @@
       "internet",
       "online",
       "connectivity",
-      "web",
-      "network"
+      "web"
     ]
   },
   {
@@ -98,6 +99,8 @@
     "synonyms": [
       "meat",
       "protein",
+      "chicken",
+      "fish",
       "seafood",
       "egg",
       "eggs"
@@ -115,8 +118,7 @@
     "synonyms": [
       "cooking",
       "kitchen",
-      "meal",
-      "food preparation"
+      "meal"
     ]
   },
   {
@@ -136,10 +138,16 @@
       "house",
       "home",
       "homes",
-      "household",
-      "households",
       "housing",
       "residence"
+    ]
+  },
+  {
+    "id": "family-household",
+    "synonyms": [
+      "family",
+      "household",
+      "households"
     ]
   },
   {
@@ -149,7 +157,6 @@
       "toilets",
       "sanitation",
       "bathroom",
-      "facility",
       "lavatory"
     ]
   },
@@ -167,10 +174,9 @@
     "synonyms": [
       "water",
       "drinking",
-      "supply",
+      "drink",
       "tap",
-      "piped",
-      "well"
+      "piped"
     ]
   },
   {
@@ -189,9 +195,7 @@
     "synonyms": [
       "bank",
       "banking",
-      "banks",
-      "financial",
-      "finance"
+      "banks"
     ]
   },
   {
@@ -212,14 +216,6 @@
       "earnings",
       "wages",
       "salary"
-    ]
-  },
-  {
-    "id": "savings-account",
-    "synonyms": [
-      "savings",
-      "account",
-      "deposit"
     ]
   },
   {
@@ -248,8 +244,7 @@
     "synonyms": [
       "care",
       "treatment",
-      "therapy",
-      "service"
+      "therapy"
     ]
   },
   {
@@ -330,6 +325,7 @@
       "gdp",
       "gross domestic product",
       "economic output",
+      "gross value added",
       "economy",
       "economic"
     ]
@@ -514,7 +510,8 @@
     "synonyms": [
       "state",
       "province",
-      "states"
+      "states",
+      "region"
     ]
   },
   {
