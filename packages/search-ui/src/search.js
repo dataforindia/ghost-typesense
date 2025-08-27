@@ -538,7 +538,7 @@ import Typesense from 'typesense';
                         results.hits.flatMap((hit) => hit.document["authors"])
                       ),
                     ]
-                      .filter((author) => !author.includes("DFI"))
+                      .filter((author) => authorDetails[author])
                       .slice(0, 3);
                     authorsHtml = `
                         <div class="author-results">
