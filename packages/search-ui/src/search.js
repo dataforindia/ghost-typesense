@@ -442,13 +442,11 @@ import Typesense from 'typesense';
                     ...searchParams
                 };
 
-                // temp for dev
-                // const results = {hits: JSON.parse(window.localStorage.getItem('allResults'))}
                 const results =  await this.typesenseClient
                     .collections(this.config.collectionName)
                     .documents()
                     .search(searchParameters);
-                window.localStorage.setItem('resultsLog', JSON.stringify(results))
+                // window.localStorage.setItem('resultsLog', JSON.stringify(results))
 
                 if (this.loadingState) this.loadingState.classList.add(`${CSS_PREFIX}-hidden`);
 
@@ -491,16 +489,12 @@ import Typesense from 'typesense';
                   ]
                     .filter((tag) => !tag.includes("#"))
                     .slice(0, 3);
-                  window.localStorage.setItem(
-                    "allResults",
-                    JSON.stringify(results.hits)
-                  );
                   tagsHtml = `<div class="tag-results">
                     <h3 class="result-group-header">Topics</h3>
                     ${allTags.map((tag) => `<div class="tag-result-item"><p class="tag-list-marker">#</p><a href="${window.location.origin}/tag/${tag}">${tag}</a></div>`).join("")}
                     </div>`;
                 } catch {
-                  // window.localStorage.setItem('allResults', 'got error :(')
+                    console.log('failed to set tags results')
                 }
 
                 const authorDetails = {
@@ -546,13 +540,13 @@ import Typesense from 'typesense';
                             ${allAuthors
                             .map(
                                 (author) =>
-                                `<div class="author-result-item"><img src="${authorDetails[author]?.image}" /><a href="${window.location.origin}/author/${authorDetails[author] && authorDetails[author].slug ||author}">${author}</a></div>`
+                                `<div class="author-result-item"><img src="${authorDetails[author]?.image}" /><a href="${window.location.origin}/author/${authorDetails[author].slug}">${author}</a></div>`
                             )
                             .join("")}
                         </div>
                     `;
                 } catch {
-                    window.localStorage.setItem('authors', 'got error :(')
+                    console.log('failed to set authors results')
                 }
                 
                 this.hitsList.innerHTML = resultsHtml + tagsHtml + authorsHtml ;
