@@ -1,4 +1,5 @@
 import Typesense from 'typesense';
+import { AUTHOR_DETAILS, SEARCH_FIELDS, SEARCH_PARAMS } from './constants';
 
 (function () {
     let isInitialized = false;
@@ -85,15 +86,7 @@ import Typesense from 'typesense';
                 theme: 'system',
                 enableHighlighting: true,
                 enableDidYouMean: true,
-                searchFields: {
-                    title: { weight: 20, highlight: true },
-                    excerpt: { weight: 9, highlight: true },
-                    headings: { weight: 8, highlight: true },
-                    plaintext: { weight: 7, highlight: true },
-                    'tags.name': { weight: 5, highlight: false },
-                    'tags.slug': { weight: 5, highlight: false },
-                    'authors': { weight: 2, highlight: false }
-                }
+                searchFields: SEARCH_FIELDS
             };
 
             this.config = {
@@ -497,34 +490,6 @@ import Typesense from 'typesense';
                     console.log('failed to set tags results')
                 }
 
-                const authorDetails = {
-                  "Rukmini S": {
-                    slug: "rukmini",
-                    image:
-                      "https://assets.dataforindia.com/ghost/2024/11/Rukmini2.jpg",
-                  },
-                  "Abhishek Waghmare": {
-                    slug: "abhishek",
-                    image:
-                      "https://assets.dataforindia.com/ghost/2024/03/Abhishek-1-.jpg",
-                  },
-                  "Nandlal Mishra": {
-                    slug: "nandlal",
-                    image:
-                      "https://assets.dataforindia.com/ghost/2024/09/nandlal.jpg",
-                  },
-                  "Pramit Bhattacharya": {
-                    slug: "pramit",
-                    image:
-                      "https://assets.dataforindia.com/ghost/2024/09/pramit.jpg",
-                  },
-                  "Nileena Suresh": {
-                    slug: "nileena",
-                    image:
-                      "https://assets.dataforindia.com/ghost/2024/09/nileena.jpg",
-                  },
-                };
-
                 let authorsHtml = ''
                 try {
                     const allAuthors = [
@@ -532,7 +497,7 @@ import Typesense from 'typesense';
                         results.hits.flatMap((hit) => hit.document["authors"])
                       ),
                     ]
-                      .filter((author) => authorDetails[author])
+                      .filter((author) => AUTHOR_DETAILS[author])
                       .slice(0, 3);
                     authorsHtml = `
                         <div class="author-results">
@@ -540,7 +505,7 @@ import Typesense from 'typesense';
                             ${allAuthors
                             .map(
                                 (author) =>
-                                `<div class="author-result-item"><img src="${authorDetails[author]?.image}" /><a href="${window.location.origin}/author/${authorDetails[author].slug}">${author}</a></div>`
+                                `<div class="author-result-item"><img src="${AUTHOR_DETAILS[author]?.image}" /><a href="${window.location.origin}/author/${AUTHOR_DETAILS[author].slug}">${author}</a></div>`
                             )
                             .join("")}
                         </div>
@@ -565,15 +530,7 @@ import Typesense from 'typesense';
         getSearchParameters() {
             const fields = Object.keys(this.config.searchFields || {}).length > 0
                 ? this.config.searchFields
-                : {
-                    title: { weight: 20, highlight: true },
-                    excerpt: { weight: 9, highlight: true },
-                    headings: { weight: 8, highlight: true },
-                    plaintext: { weight: 7, highlight: true },
-                    'tags.name': { weight: 5, highlight: false },
-                    'tags.slug': { weight: 5, highlight: false },
-                    'authors': { weight: 2, highlight: false }
-                };
+                : SEARCH_FIELDS;
 
             const searchFields = [];
             const weights = [];
@@ -591,18 +548,8 @@ import Typesense from 'typesense';
                 query_by: searchFields.join(','),
                 query_by_weights: weights.join(','),
                 highlight_full_fields: highlightFields.join(','),
-                highlight_affix_num_tokens: 15,
                 include_fields: 'title,url,excerpt,plaintext,updated_at,published_at,tags,authors,headings',
-                // typo_tolerance: false,
-                num_typos: 2,
-                prefix: false,
-                per_page: 20,
-                drop_tokens_threshold: 0,
-                enable_nested_fields: true,
-                prioritize_exact_match: true,
-                // text_match_type: 'sum_score',
-                use_cache: true,
-                sort_by: '_text_match:desc,updated_at:desc,published_at:desc'
+                ...SEARCH_PARAMS
             };
         }
 
