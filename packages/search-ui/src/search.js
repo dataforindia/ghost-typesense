@@ -1,4 +1,5 @@
 import Typesense from 'typesense';
+import { AUTHOR_DETAILS, SEARCH_FIELDS, SEARCH_PARAMS } from './constants';
 
 (function () {
     let isInitialized = false;
@@ -46,7 +47,7 @@ import Typesense from 'typesense';
                 observer.disconnect();
                 observer = null;
             }
-        }, 5000);
+        }, 15000);
     }
 
     // CSS class prefix to avoid conflicts
@@ -85,13 +86,7 @@ import Typesense from 'typesense';
                 theme: 'system',
                 enableHighlighting: true,
                 enableDidYouMean: true,
-                searchFields: {
-                    title: { weight: 5, highlight: true },
-                    excerpt: { weight: 3, highlight: true },
-                    plaintext: { weight: 4, highlight: true },
-                    'tags.name': { weight: 4, highlight: true },
-                    'tags.slug': { weight: 3, highlight: true }
-                }
+                searchFields: SEARCH_FIELDS
             };
 
             this.config = {
@@ -139,7 +134,7 @@ import Typesense from 'typesense';
                                         <input 
                                             type="search" 
                                             class="${CSS_PREFIX}-input" 
-                                            placeholder="Search for anything"
+                                            placeholder="Search posts, topics and authors.."
                                             autocomplete="off"
                                             autocorrect="off"
                                             autocapitalize="off"
@@ -149,19 +144,8 @@ import Typesense from 'typesense';
                                         />
                                     </form>
                                 </div>
-                                <div class="${CSS_PREFIX}-hints">
-                                    <span>
-                                        <kbd class="${CSS_PREFIX}-kbd">↑↓</kbd>
-                                        to navigate
-                                    </span>
-                                    <span>
-                                        <kbd class="${CSS_PREFIX}-kbd">esc</kbd>
-                                        to close
-                                    </span>
-                                </div>
                             </div>
                             <div class="${CSS_PREFIX}-results-container">
-                                ${this.getCommonSearchesHtml()}
                                 <div id="${CSS_PREFIX}-hits" class="${CSS_PREFIX}-hits-list" role="region" aria-label="Search results"></div>
                                 <div id="${CSS_PREFIX}-loading" class="${CSS_PREFIX}-loading ${CSS_PREFIX}-hidden" role="status" aria-live="polite">
                                     <div class="${CSS_PREFIX}-spinner" aria-hidden="true"></div>
@@ -169,9 +153,10 @@ import Typesense from 'typesense';
                                 </div>
                                 <div id="${CSS_PREFIX}-empty" class="${CSS_PREFIX}-empty ${CSS_PREFIX}-hidden" role="status" aria-live="polite">
                                     <div class="${CSS_PREFIX}-empty-message">
-                                        <p>No results found for your search</p>
+                                        <p>No matches found</p>
                                     </div>
                                 </div>
+                                ${this.getCommonSearchesHtml()}
                             </div>
                         </div>
                     </div>
@@ -205,8 +190,8 @@ import Typesense from 'typesense';
 
             return `
                 <div class="${CSS_PREFIX}-common-searches">
-                    <div class="${CSS_PREFIX}-common-searches-title" role="heading" aria-level="2">
-                        Common searches
+                    <div class="result-group-header" role="heading" aria-level="2">
+                        Featured searches
                     </div>
                     <div id="${CSS_PREFIX}-common-searches-container" role="list">
                         ${this.config.commonSearches.map(search => `
@@ -446,13 +431,15 @@ import Typesense from 'typesense';
                 const searchParams = this.getSearchParameters();
                 const searchParameters = {
                     q: query,
+                    ...(query.includes('"') ? {} : { stopwords: "common-english" }),
                     ...searchParams
                 };
 
-                const results = await this.typesenseClient
+                const results =  await this.typesenseClient
                     .collections(this.config.collectionName)
                     .documents()
                     .search(searchParameters);
+                // window.localStorage.setItem('resultsLog', JSON.stringify(results))
 
                 if (this.loadingState) this.loadingState.classList.add(`${CSS_PREFIX}-hidden`);
 
@@ -470,9 +457,9 @@ import Typesense from 'typesense';
                 // Clear and populate results
                 this.hitsList.innerHTML = '';
                 
-                const resultsHtml = results.hits.map(hit => {
-                    const title = hit.document.title || 'Untitled';
-                    const excerpt = hit.document.excerpt || hit.document.plaintext?.substring(0, 160) || '';
+                const resultsHtml = `<div class="post-results"><h3 class="result-group-header">Posts</h3>${results.hits.map(hit => {
+                    const title = hit.highlight.title?.snippet || hit.document.title || 'Untitled';
+                    const excerpt = hit.highlight.excerpt?.snippet || hit.highlight.plaintext?.snippet || hit.document.excerpt || hit.document.plaintext || '';
                     
                     return `
                         <a href="${hit.document.url || '#'}" 
@@ -480,13 +467,54 @@ import Typesense from 'typesense';
                             aria-label="${title}">
                             <article class="${CSS_PREFIX}-result-item" role="article">
                                 <h3 class="${CSS_PREFIX}-result-title" role="heading" aria-level="3">${title}</h3>
-                                <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">${excerpt}</p>
+                                <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">${excerpt}...</p>
                             </article>
                         </a>
                     `;
-                }).join('');
+                }).join('')}<div/>`;
+
+                let tagsHtml = "";
+                try {
+                  const allTags = [
+                    ...new Set(
+                      results.hits.flatMap((hit) => hit.document["tags.name"])
+                    ),
+                  ]
+                    .filter((tag) => !tag.includes("#"))
+                    .slice(0, 3);
+                  tagsHtml = `<div class="tag-results">
+                    <h3 class="result-group-header">Topics</h3>
+                    ${allTags.map((tag) => `<div class="tag-result-item"><p class="tag-list-marker">#</p><a href="${window.location.origin}/tag/${tag}">${tag}</a></div>`).join("")}
+                    </div>`;
+                } catch {
+                    console.log('failed to set tags results')
+                }
+
+                let authorsHtml = ''
+                try {
+                    const allAuthors = [
+                      ...new Set(
+                        results.hits.flatMap((hit) => hit.document["authors"])
+                      ),
+                    ]
+                      .filter((author) => AUTHOR_DETAILS[author])
+                      .slice(0, 3);
+                    authorsHtml = `
+                        <div class="author-results">
+                            <h3 class="result-group-header">Authors</h3>
+                            ${allAuthors
+                            .map(
+                                (author) =>
+                                `<div class="author-result-item"><img src="${AUTHOR_DETAILS[author]?.image}" /><a href="${window.location.origin}/author/${AUTHOR_DETAILS[author].slug}">${author}</a></div>`
+                            )
+                            .join("")}
+                        </div>
+                    `;
+                } catch {
+                    console.log('failed to set authors results')
+                }
                 
-                this.hitsList.innerHTML = resultsHtml;
+                this.hitsList.innerHTML = resultsHtml + tagsHtml + authorsHtml ;
                 this.hitsList.classList.remove(`${CSS_PREFIX}-hidden`);
             } catch (error) {
                 console.error('Search failed:', error);
@@ -502,13 +530,7 @@ import Typesense from 'typesense';
         getSearchParameters() {
             const fields = Object.keys(this.config.searchFields || {}).length > 0
                 ? this.config.searchFields
-                : {
-                    title: { weight: 5, highlight: true },
-                    excerpt: { weight: 3, highlight: true },
-                    plaintext: { weight: 4, highlight: true },
-                    'tags.name': { weight: 4, highlight: true },
-                    'tags.slug': { weight: 3, highlight: true }
-                };
+                : SEARCH_FIELDS;
 
             const searchFields = [];
             const weights = [];
@@ -526,16 +548,8 @@ import Typesense from 'typesense';
                 query_by: searchFields.join(','),
                 query_by_weights: weights.join(','),
                 highlight_full_fields: highlightFields.join(','),
-                highlight_affix_num_tokens: 30,
-                include_fields: 'title,url,excerpt,plaintext,published_at,tags',
-                typo_tolerance: false,
-                num_typos: 0,
-                prefix: true,
-                per_page: 20,
-                drop_tokens_threshold: 0,
-                enable_nested_fields: true,
-                prioritize_exact_match: true,
-                sort_by: '_text_match:desc,published_at:desc'
+                include_fields: 'title,url,excerpt,plaintext,updated_at,published_at,tags,authors,headings',
+                ...SEARCH_PARAMS
             };
         }
 

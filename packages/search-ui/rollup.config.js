@@ -5,6 +5,7 @@ import terser from '@rollup/plugin-terser';
 import fs from 'fs';
 import path from 'path';
 import { visualizer } from 'rollup-plugin-visualizer';
+import { SEARCH_VERSION } from './src/constants.js';
 
 // Read CSS file directly
 const css = fs.readFileSync(path.resolve('src/styles.css'), 'utf8');
@@ -18,7 +19,7 @@ export default {
   },
   input: 'src/search.js',
   output: {
-    file: 'dist/search.min.js',
+    file: `../../search-v${SEARCH_VERSION}.min.js`,
     format: 'iife',
     name: 'MagicPagesSearch',
     generatedCode: {
@@ -67,7 +68,7 @@ export default {
     }),
     visualizer({
       filename: 'stats.html',
-      open: true
+      open: false
     })
   ]
 };
