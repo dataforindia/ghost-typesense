@@ -203,7 +203,7 @@ import {
                         ${this.config.commonSearches.map(search => `
                             <button type="button" 
                                 class="${CSS_PREFIX}-common-search-btn" 
-                                data-search="${search}"
+                                data-search='${search}'
                                 role="listitem">
                                 ${search}
                             </button>
