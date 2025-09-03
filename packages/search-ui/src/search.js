@@ -1,5 +1,11 @@
 import Typesense from 'typesense';
-import { AUTHOR_DETAILS, SEARCH_FIELDS, SEARCH_PARAMS } from './constants';
+import {
+  AUTHOR_DETAILS,
+  SEARCH_FIELDS,
+  SEARCH_PARAMS,
+  DEFAULT_POST_HITS_COUNT,
+  POST_HITS_INCREMENT_COUNT,
+} from "./constants";
 
 (function () {
     let isInitialized = false;
@@ -401,44 +407,42 @@ import { AUTHOR_DETAILS, SEARCH_FIELDS, SEARCH_PARAMS } from './constants';
         }
 
         getResultsHtml(results) {
-            const initialHits = results.slice(0, 3).map(this.renderHit).join("");
-            const hasMore = results.length > 3;
+            const initialHits = results.slice(0, DEFAULT_POST_HITS_COUNT).map(this.renderPostHit).join("");
+            const hasMore = results.length > DEFAULT_POST_HITS_COUNT;
             return `
                 <div class="post-results">
                 <h3 class="result-group-header">Posts</h3>
                 <span id="post-hits">${initialHits}</span>
-                ${hasMore ? `<div id="show-more-container" class="show-more-container"><button id="show-more-results">Show More Results</button></div>` : ""}
+                ${hasMore ? `<div id="show-more-container" class="show-more-container"><button id="show-more-results" aria-controls="post-hits">Show More Results</button></div>` : ""}
                 </div>
             `;
         }
 
-        renderHit = (hit) => {
-        const title = hit.highlight.title?.snippet || hit.document.title || "Untitled";
-        const excerpt =
-            hit.highlight.excerpt?.snippet ||
-            hit.highlight.plaintext?.snippet ||
-            hit.document.excerpt ||
-            hit.document.plaintext ||
-            "";
+        renderPostHit = (hit) => {
+            const title = hit.highlight.title?.snippet || hit.document.title || "Untitled";
+            const excerpt =
+                hit.highlight.excerpt?.snippet ||
+                hit.highlight.plaintext?.snippet ||
+                hit.document.excerpt ||
+                hit.document.plaintext ||
+                "";
 
-        return `
-            <a href="${hit.document.url || "#"}" 
-                class="${CSS_PREFIX}-result-link"
-                aria-label="${title}">
-                <article class="${CSS_PREFIX}-result-item">
-                    <h3 class="${CSS_PREFIX}-result-title">${title}</h3>
-                    <p class="${CSS_PREFIX}-result-excerpt">${excerpt}...</p>
-                </article>
-            </a>
-        `;
+            return `
+                <a href="${hit.document.url || "#"}" class="${CSS_PREFIX}-result-link">
+                    <article class="${CSS_PREFIX}-result-item">
+                        <h3 class="${CSS_PREFIX}-result-title">${title}</h3>
+                        <p class="${CSS_PREFIX}-result-excerpt">${excerpt}...</p>
+                    </article>
+                </a>
+            `;
         };
 
-        updatePostHits(results, limit = 3) {
+        updatePostHits(results, limit) {
             const container = document.getElementById("post-hits");
             if (!container) return;
 
             const nextHits = results.slice(this.currentHitIndex, this.currentHitIndex + limit);
-            container.insertAdjacentHTML("beforeend", nextHits.map(this.renderHit).join(""));
+            container.insertAdjacentHTML("beforeend", nextHits.map(this.renderPostHit).join(""));
             this.currentHitIndex += limit;
 
             // hide button
@@ -453,7 +457,10 @@ import { AUTHOR_DETAILS, SEARCH_FIELDS, SEARCH_PARAMS } from './constants';
 
             if (!query) {
                 this.selectedIndex = -1;
-                if (this.hitsList) this.hitsList.classList.add(`${CSS_PREFIX}-hidden`);
+                if (this.hitsList) {
+                    this.hitsList.classList.add(`${CSS_PREFIX}-hidden`)
+                    this.hitsList.innerHTML = '';
+                }
                 if (this.commonSearches) this.commonSearches.classList.remove(`${CSS_PREFIX}-hidden`);
                 if (this.emptyState) this.emptyState.classList.add(`${CSS_PREFIX}-hidden`);
                 if (this.loadingState) this.loadingState.classList.add(`${CSS_PREFIX}-hidden`);
@@ -504,15 +511,15 @@ import { AUTHOR_DETAILS, SEARCH_FIELDS, SEARCH_PARAMS } from './constants';
                 
                 // Clear and populate results
                 this.hitsList.innerHTML = '';
+                this.currentHitIndex = DEFAULT_POST_HITS_COUNT;
                 const resultsHtml = this.getResultsHtml(results.hits)
-                this.currentHitIndex = 3;
 
                 let intervalTimer = 0;
                 const interval = setInterval(() => {
                   const showMoreBtn = document.getElementById("show-more-container");
                   if (showMoreBtn) {
                     showMoreBtn.addEventListener("click", () => {
-                      this.updatePostHits(results.hits, 3);
+                      this.updatePostHits(results.hits, POST_HITS_INCREMENT_COUNT);
                     });
                     clearInterval(interval);
                   }
