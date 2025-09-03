@@ -400,6 +400,54 @@ import { AUTHOR_DETAILS, SEARCH_FIELDS, SEARCH_PARAMS } from './constants';
             }
         }
 
+        getResultsHtml(results) {
+            const initialHits = results.slice(0, 3).map(this.renderHit).join("");
+            const hasMore = results.length > 3;
+            return `
+                <div class="post-results">
+                <h3 class="result-group-header">Posts</h3>
+                <span id="post-hits">${initialHits}</span>
+                ${hasMore ? `<div id="show-more-container" class="show-more-container"><button id="show-more-results">Show More Results</button></div>` : ""}
+                </div>
+            `;
+        }
+
+        renderHit = (hit) => {
+        const title = hit.highlight.title?.snippet || hit.document.title || "Untitled";
+        const excerpt =
+            hit.highlight.excerpt?.snippet ||
+            hit.highlight.plaintext?.snippet ||
+            hit.document.excerpt ||
+            hit.document.plaintext ||
+            "";
+
+        return `
+            <a href="${hit.document.url || "#"}" 
+                class="${CSS_PREFIX}-result-link"
+                aria-label="${title}">
+                <article class="${CSS_PREFIX}-result-item">
+                    <h3 class="${CSS_PREFIX}-result-title">${title}</h3>
+                    <p class="${CSS_PREFIX}-result-excerpt">${excerpt}...</p>
+                </article>
+            </a>
+        `;
+        };
+
+        updatePostHits(results, limit = 3) {
+            const container = document.getElementById("post-hits");
+            if (!container) return;
+
+            const nextHits = results.slice(this.currentHitIndex, this.currentHitIndex + limit);
+            container.insertAdjacentHTML("beforeend", nextHits.map(this.renderHit).join(""));
+            this.currentHitIndex += limit;
+
+            // hide button
+            const showMoreBtn = document.getElementById("show-more-container");
+            if (this.currentHitIndex >= results.length && showMoreBtn) {
+                showMoreBtn.style.display = "none";
+            }
+        }
+
         async handleSearch(query) {
             query = query?.trim();
 
@@ -456,22 +504,21 @@ import { AUTHOR_DETAILS, SEARCH_FIELDS, SEARCH_PARAMS } from './constants';
                 
                 // Clear and populate results
                 this.hitsList.innerHTML = '';
-                
-                const resultsHtml = `<div class="post-results"><h3 class="result-group-header">Posts</h3>${results.hits.map(hit => {
-                    const title = hit.highlight.title?.snippet || hit.document.title || 'Untitled';
-                    const excerpt = hit.highlight.excerpt?.snippet || hit.highlight.plaintext?.snippet || hit.document.excerpt || hit.document.plaintext || '';
-                    
-                    return `
-                        <a href="${hit.document.url || '#'}" 
-                            class="${CSS_PREFIX}-result-link"
-                            aria-label="${title}">
-                            <article class="${CSS_PREFIX}-result-item" role="article">
-                                <h3 class="${CSS_PREFIX}-result-title" role="heading" aria-level="3">${title}</h3>
-                                <p class="${CSS_PREFIX}-result-excerpt" aria-label="Article excerpt">${excerpt}...</p>
-                            </article>
-                        </a>
-                    `;
-                }).join('')}<div/>`;
+                const resultsHtml = this.getResultsHtml(results.hits)
+                this.currentHitIndex = 3;
+
+                let intervalTimer = 0;
+                const interval = setInterval(() => {
+                  const showMoreBtn = document.getElementById("show-more-container");
+                  if (showMoreBtn) {
+                    showMoreBtn.addEventListener("click", () => {
+                      this.updatePostHits(results.hits, 3);
+                    });
+                    clearInterval(interval);
+                  }
+                  intervalTimer += 100;
+                  if (intervalTimer >= 5000) clearInterval(interval);
+                }, 100);
 
                 let tagsHtml = "";
                 try {
