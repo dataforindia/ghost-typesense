@@ -37,10 +37,14 @@ export const SEARCH_PARAMS = {
   highlight_affix_num_tokens: 15,
   num_typos: 2,
   prefix: false,
-  per_page: 20,
+  per_page: 30,
   drop_tokens_threshold: 0,
   enable_nested_fields: true,
   prioritize_exact_match: true,
   use_cache: true,
   sort_by: "_text_match:desc,updated_at:desc,published_at:desc",
 };
+
+export const DEFAULT_POST_HITS_COUNT = 3
+
+export const POST_HITS_INCREMENT_COUNT = 3
